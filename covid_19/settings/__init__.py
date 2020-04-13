@@ -1,6 +1,6 @@
 DATE_FORMAT = '%d.%m.%Y'
 
-INITIAL_COUNTRIES = ['World','Germany','US']
+INITIAL_COUNTRIES = ['World','Germany','United States of America']
 
 GRAPH_SCALE_OPTIONS = {
     'log':'logarithmic',

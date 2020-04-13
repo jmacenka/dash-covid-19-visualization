@@ -50,30 +50,28 @@ def get_slider_marks(dates_list,num_marks=15):
             dates[idx] = ''
     return dates
 
-def get_country_data_df(data_selection_value:str, country:str, range_slider_value:list):
-    return dfs[data_selection_value]['data'][country][range_slider_value[0] : range_slider_value[-1]]
+def get_country_data_df(data_selection_value:str, data_evaluation_value:str, country:str, range_slider_value:list):
+    return dfs[data_selection_value][data_evaluation_value]['data'][country][range_slider_value[0] : range_slider_value[-1]]
 
-def build_graph(country_selection_value, range_slider_value, yaxis_data_selection_value, xaxis_data_selection_value, yaxis_type_value, xaxis_type_value, yaxis_averaging_days, xaxis_averaging_days, data=None, *args, **kwargs):
+def build_graph(country_selection_value, range_slider_value, yaxis_data_selection_value, xaxis_data_selection_value, yaxis_data_evaluation_value, xaxis_data_evaluation_value, yaxis_type_value, xaxis_type_value, yaxis_averaging_days, xaxis_averaging_days, data=None, *args, **kwargs):
     data = []
     if not country_selection_value:
         return None
     for country in country_selection_value:
-        y = get_country_data_df(yaxis_data_selection_value,country,range_slider_value)
-        x = get_country_data_df(xaxis_data_selection_value,country,range_slider_value)
-        # y = dfs[yaxis_data_selection_value]['data'][country][range_slider_value[0] : range_slider_value[-1]]
-        # x = dfs[xaxis_data_selection_value]['data'][country][range_slider_value[0] : range_slider_value[-1]]
-        y_unit = dfs[yaxis_data_selection_value]['unit']
-        x_unit = dfs[xaxis_data_selection_value]['unit']
+        y = get_country_data_df(yaxis_data_selection_value, yaxis_data_evaluation_value, country, range_slider_value)
+        x = get_country_data_df(xaxis_data_selection_value, xaxis_data_evaluation_value, country, range_slider_value)
+        y_unit = dfs[yaxis_data_selection_value][yaxis_data_evaluation_value]['unit']
+        x_unit = dfs[xaxis_data_selection_value][xaxis_data_evaluation_value]['unit']
         yaxis_type = 'lin'
         xaxis_type = 'lin'
         yaxis_title = str(yaxis_data_selection_value)
         xaxis_title = str(xaxis_data_selection_value)
-        if yaxis_data_selection_value != 'Time':
+        if yaxis_data_selection_value != 'time':
             y = y.rolling(yaxis_averaging_days).mean()
             yaxis_type = yaxis_type_value
             if yaxis_averaging_days > 1:
                 yaxis_title += f' with moving average of {yaxis_averaging_days} days'
-        if xaxis_data_selection_value != 'Time':
+        if xaxis_data_selection_value != 'time':
             x = x.rolling(xaxis_averaging_days).mean()
             xaxis_type = xaxis_type_value
             if xaxis_averaging_days > 1:
@@ -110,8 +108,8 @@ def build_graph(country_selection_value, range_slider_value, yaxis_data_selectio
     )
     return graph
 
-global list_of_avaliable_countries, list_of_available_dates, dfs, country_population_dict
-list_of_avaliable_countries, list_of_available_dates, dfs = generate_dataframes_dict()
+global list_of_avaliable_countries, evaluation_options, list_of_available_dates, dfs, country_population_dict
+list_of_avaliable_countries, evaluation_options, list_of_available_dates, dfs = generate_dataframes_dict()
 country_population_dict = get_population_by_country_dict()
 
 app.layout = dbc.Jumbotron(
@@ -203,21 +201,33 @@ app.layout = dbc.Jumbotron(
                                                 dbc.FormGroup(
                                                     children= [
                                                         dcc.Dropdown(
-                                                            id='yaxis-type',
-                                                            options=[{'value': value, 'label': f'Y-axis-scale: {label}'} for value, label in GRAPH_SCALE_OPTIONS.items()],
-                                                            value=list(GRAPH_SCALE_OPTIONS.keys())[-1],
-                                                            multi=False,
-                                                            className='spaced',
-                                                            persistence=True,
-                                                            clearable=False,
-                                                        ),
-                                                        dcc.Dropdown(
                                                             id='yaxis-data-selection',
                                                             options=[
                                                                 {'value':key, 'label':f'Y-axis-data: {key}'} for key in dfs.keys()
                                                             ],
                                                             value = list(dfs.keys())[0],
                                                             placeholder='Select data for the Y-axis',
+                                                            multi=False,
+                                                            className='spaced',
+                                                            persistence=True,
+                                                            clearable=False,
+                                                        ),
+                                                        dcc.Dropdown(
+                                                            id='yaxis-data-evaluation',
+                                                            options=[
+                                                                {'value':key, 'label':f'Y-axis-evaluation: {key}'} for key in evaluation_options
+                                                            ],
+                                                            value = list(evaluation_options)[-1],
+                                                            placeholder='Select data for the Y-axis',
+                                                            multi=False,
+                                                            className='spaced',
+                                                            persistence=True,
+                                                            clearable=False,
+                                                        ),
+                                                        dcc.Dropdown(
+                                                            id='yaxis-type',
+                                                            options=[{'value': value, 'label': f'Y-axis-scale: {label}'} for value, label in GRAPH_SCALE_OPTIONS.items()],
+                                                            value=list(GRAPH_SCALE_OPTIONS.keys())[-1],
                                                             multi=False,
                                                             className='spaced',
                                                             persistence=True,
@@ -249,21 +259,33 @@ app.layout = dbc.Jumbotron(
                                                 dbc.FormGroup(
                                                     children= [
                                                         dcc.Dropdown(
-                                                            id='xaxis-type',
-                                                            options=[{'value': value, 'label': f'X-axis-scale: {label}'} for value, label in GRAPH_SCALE_OPTIONS.items()],
-                                                            value=list(GRAPH_SCALE_OPTIONS.keys())[-1],
-                                                            multi=False,
-                                                            className='spaced',
-                                                            persistence=True,
-                                                            clearable=False,
-                                                        ),
-                                                        dcc.Dropdown(
                                                             id='xaxis-data-selection',
                                                             options=[
                                                                 {'value':key, 'label':f'X-axis-data: {key}'} for key in dfs.keys()
                                                             ],
                                                             value = list(dfs.keys())[-1],
                                                             placeholder='Select data for the X-axis',
+                                                            multi=False,
+                                                            className='spaced',
+                                                            persistence=True,
+                                                            clearable=False,
+                                                        ),
+                                                        dcc.Dropdown(
+                                                            id='xaxis-data-evaluation',
+                                                            options=[
+                                                                {'value':key, 'label':f'X-axis-evaluation: {key}'} for key in evaluation_options
+                                                            ],
+                                                            value = list(evaluation_options)[-1],
+                                                            placeholder='Select data for the X-axis',
+                                                            multi=False,
+                                                            className='spaced',
+                                                            persistence=True,
+                                                            clearable=False,
+                                                        ),
+                                                        dcc.Dropdown(
+                                                            id='xaxis-type',
+                                                            options=[{'value': value, 'label': f'X-axis-scale: {label}'} for value, label in GRAPH_SCALE_OPTIONS.items()],
+                                                            value=list(GRAPH_SCALE_OPTIONS.keys())[-1],
                                                             multi=False,
                                                             className='spaced',
                                                             persistence=True,
@@ -331,12 +353,12 @@ app.layout = dbc.Jumbotron(
                         html.Div(
                             id='modeling-settings',
                             children=[
-                                'Work in Progress..'
+                                'Coming soon..'
                             ],
                         ),
                         html.Div(
                             id='modeling-graph',
-                            children='populated by callback'
+                            # children='populated by callback'
                         ),
                     ],
                 ),
@@ -381,21 +403,27 @@ app.layout = dbc.Jumbotron(
     [State("info-modal", "is_open")],
 )
 def toggle_modal(n_open, n_close, is_open):
-    global list_of_avaliable_countries, list_of_available_dates, dfs
-    list_of_avaliable_countries, list_of_available_dates, dfs = generate_dataframes_dict()
+    # global list_of_avaliable_countries, evaluation_options, list_of_available_dates, dfs
+    # list_of_avaliable_countries, evaluation_options, list_of_available_dates, dfs = generate_dataframes_dict()
     if n_open or n_close:
         return not is_open
     return is_open
 
 @app.callback(
     [Output('data-visualitaion-graph','children'),
-    Output('excel-download','href'),],
+    Output('excel-download','href'),
+    Output('yaxis-type','disabled'),
+    Output('yaxis-data-evaluation','disabled'),
+    Output('xaxis-type','disabled'),
+    Output('xaxis-data-evaluation','disabled'),],
     [Input('country-selection','value'),
     Input('date-range-slider','value'),
     Input('yaxis-type','value'),
     Input('xaxis-type','value'),
     Input('yaxis-data-selection','value'),
     Input('xaxis-data-selection','value'),
+    Input('yaxis-data-evaluation','value'),
+    Input('xaxis-data-evaluation','value'),
     Input('y-averaging-range-slider','value'),
     Input('x-averaging-range-slider','value'),],    
 )
@@ -405,6 +433,8 @@ def update_data_visualitaion_graph(country_selection_value,
                 xaxis_type_value,
                 yaxis_data_selection_value,
                 xaxis_data_selection_value,
+                yaxis_data_evaluation_value,
+                xaxis_data_evaluation_value,
                 yaxis_averaging_days,
                 xaxis_averaging_days,
                 ):
@@ -415,6 +445,8 @@ def update_data_visualitaion_graph(country_selection_value,
             range_slider_value=range_slider_value, 
             yaxis_data_selection_value=yaxis_data_selection_value, 
             xaxis_data_selection_value=xaxis_data_selection_value, 
+            yaxis_data_evaluation_value=yaxis_data_evaluation_value, 
+            xaxis_data_evaluation_value=xaxis_data_evaluation_value, 
             yaxis_type_value=yaxis_type_value, 
             xaxis_type_value=xaxis_type_value, 
             yaxis_averaging_days=yaxis_averaging_days, 
@@ -423,28 +455,43 @@ def update_data_visualitaion_graph(country_selection_value,
     
     graph = build_graph(**env_variables)
     
-    href_data_downloadable = 'www.google.de'
+    xlsx_io = io.BytesIO()
+    with pd.ExcelWriter(xlsx_io, engine='xlsxwriter') as writer:
+        for country in country_selection_value:
+            df_y_data = get_country_data_df(yaxis_data_selection_value, yaxis_data_evaluation_value, country, range_slider_value)
+            df_y_data.columns = [f'{country} - {yaxis_data_selection_value}',]
+            df_x_data = get_country_data_df(xaxis_data_selection_value, xaxis_data_evaluation_value, country, range_slider_value)
+            df_x_data.columns = [f'{country} - {xaxis_data_selection_value}',]
+            pd.concat([df_y_data, df_x_data], axis=1).to_excel(writer, sheet_name=country)
+    xlsx_io.seek(0)
+    # https://en.wikipedia.org/wiki/Data_URI_scheme
+    media_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    data = base64.b64encode(xlsx_io.read()).decode("utf-8")
+    href_data_downloadable = f'data:{media_type};base64,{data}'
+    #href_data_downloadable = 'www.google.de'
     
-    return (graph, href_data_downloadable)
+    yaxis_type_disabled = 'time' in yaxis_data_selection_value
+    yaxis_data_evaluation_disabled = 'time' in yaxis_data_selection_value
+    xaxis_type_disabled = 'time' in xaxis_data_selection_value
+    xaxis_data_evaluation_disabled = 'time' in xaxis_data_selection_value
+    
+    return (
+        graph, 
+        href_data_downloadable, 
+        yaxis_type_disabled, 
+        yaxis_data_evaluation_disabled, 
+        xaxis_type_disabled, 
+        xaxis_data_evaluation_disabled,       
+    )
 
-    # df = pd.DataFrame(...)
-    # xlsx_io = io.BytesIO()
-    # writer = pd.ExcelWriter(xlsx_io, engine='xlsxwriter')
-    # df.to_excel(writer, sheet_name=period)
-    # writer.save()
-    # xlsx_io.seek(0)
-    # # https://en.wikipedia.org/wiki/Data_URI_scheme
-    # media_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    # data = base64.b64encode(xlsx_io.read()).decode("utf-8")
-    # href_data_downloadable = f'data:{media_type};base64,{data}'
-    # return href_data_downloadable 
+
 
 # Extract the Flask-Server for gunicorn
 server = app.server
 # Run the Dash app, only for local development
 if __name__ == '__main__':
-    if os.environ.get('LAUNCHED_FROM_DOCKER_COMPOSE',False):
+    if not os.environ.get('LAUNCHED_FROM_DOCKER_COMPOSE',False):
         from random import randint
-        app.run_server(debug=True, port=randint(8001,8999))
+        app.run_server(debug=True, port=8055)
     else:
         app.server.run(host='0.0.0.0',debug=True, port=int(os.environ.get('COVID_APP_CONTAINER_EXPOSED_PORT',8050)), threaded=True)

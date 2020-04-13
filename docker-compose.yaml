@@ -5,9 +5,9 @@ services:
     build:
       context: ./covid_19/
       dockerfile: Dockerfile
-      args:
-        APP_EXPOSED_PORT: ${COVID_APP_CONTAINER_EXPOSED_PORT}
     ports:
-      - ${COVID_APP_PUBLISHED_PORT}:${COVID_APP_CONTAINER_EXPOSED_PORT}
+      - ${COVID_APP_PUBLISHED_PORT}:8050
     env_file:
       - ./.env
+    environment:
+      - LAUNCHED_FROM_DOCKER_COMPOSE=True

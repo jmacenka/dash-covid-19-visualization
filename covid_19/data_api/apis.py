@@ -11,23 +11,12 @@ def generate_dataframes_dict(source_file_list = [(sub,f"https://raw.githubuserco
     country_population_dict = get_population_by_country_dict()
     for sub, path in source_file_list:
         # TODO: Parallelize this
-        sub_cap = sub.capitalize()
+        sub_cap = sub.lower()
         df = pd.read_csv(path)
         df = df.groupby('Country/Region').agg('sum').drop(['Lat','Long'],axis=1).T
-        df.index = pd.to_datetime(df.index, infer_datetime_format=True)
+        df.rename(columns={'US':'United States of America'}, inplace=True)
         df['World'] = df.sum(axis=1)
-        dfs[f'{sub_cap} cases'] = {
-            'data':df.copy(deep=True),
-            'unit':'total cases',
-        }
-        dfs[f'{sub_cap} new cases'] = {
-            'data':df.diff().copy(deep=True),
-            'unit':'cases / day',
-        }
-        dfs[f'{sub_cap} cases growth rate'] = {
-            'data':df.pct_change().copy(deep=True)*100,
-            'unit':'% change from previous day',
-        }
+        df.index = pd.to_datetime(df.index, infer_datetime_format=True)
 
         # Normalizing by country population
         available_country_population = set(country_population_dict.keys())
@@ -38,14 +27,34 @@ def generate_dataframes_dict(source_file_list = [(sub,f"https://raw.githubuserco
                 country_population = country_population_dict.get(c)
                 df_normalized[country] = df[country] / (country_population/100)
             else:
-                df_normalized[country] = pd.Series([1 for _ in df.index])
-        dfs[f'{sub_cap} normalized country population'] = {
+                df_normalized[country] = pd.Series([0 for _ in df.index])
+        
+        cases = {
+            'data':df.copy(deep=True),
+            'unit':'total cases',
+        }
+        new_cases = {
+            'data':df.diff().copy(deep=True),
+            'unit':'cases / day',
+        }
+        new_cases_growth_rate = {
+            'data':df.pct_change().copy(deep=True)*100,
+            'unit':'% change from previous day',
+        }
+        normalized_cases = {
             'data': df_normalized,
             'unit':'% of countrys population',
         }
+        dfs[sub_cap] = {
+            'cumulative cases':cases,
+            'cumulative cases normalized':normalized_cases,
+            'daily new cases':new_cases,
+            'daily new cases growth rate':new_cases_growth_rate,
+        }
+        evaluation_options = dfs[sub_cap].keys()
         
-    dfs['Time'] = {
+    dfs['time'] = {key:{
         'data':pd.DataFrame({country:df.index for country in df.columns}),
         'unit':'date',
-    }
-    return (df.columns.unique(), df.index, dfs)
+    } for key in evaluation_options}
+    return (df.columns.unique(), evaluation_options, df.index, dfs)
