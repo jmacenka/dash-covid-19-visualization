@@ -217,7 +217,7 @@ app.layout = dbc.Jumbotron(
                                                             options=[
                                                                 {'value':key, 'label':f'Y-axis-evaluation: {key}'} for key in evaluation_options
                                                             ],
-                                                            value = list(evaluation_options)[-1],
+                                                            value = list(evaluation_options)[0],
                                                             placeholder='Select data for the Y-axis',
                                                             multi=False,
                                                             className='spaced',
@@ -275,7 +275,7 @@ app.layout = dbc.Jumbotron(
                                                             options=[
                                                                 {'value':key, 'label':f'X-axis-evaluation: {key}'} for key in evaluation_options
                                                             ],
-                                                            value = list(evaluation_options)[-1],
+                                                            value = list(evaluation_options)[0],
                                                             placeholder='Select data for the X-axis',
                                                             multi=False,
                                                             className='spaced',
