@@ -1,3 +1,7 @@
-# A more interactive visual Application for inspecting current corona figures and the overall progression.
+# Yet Another Covid Dashboard
 
-Jan Macenka
+## A more interactive visual Application for inspecting current corona figures and the overall progression.
+
+## Feel free to fork, deploy or comment on :-)
+
+> Jan Macenka

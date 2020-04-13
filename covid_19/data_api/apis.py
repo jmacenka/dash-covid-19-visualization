@@ -33,23 +33,28 @@ def generate_dataframes_dict(source_file_list = [(sub,f"https://raw.githubuserco
             'data':df.copy(deep=True),
             'unit':'total cases',
         }
+        cases_growth_rate = {
+            'data':df.pct_change().copy(deep=True),
+            'unit':'% change from previous day',
+        }
         new_cases = {
             'data':df.diff().copy(deep=True),
             'unit':'cases / day',
         }
-        new_cases_growth_rate = {
-            'data':df.pct_change().copy(deep=True)*100,
-            'unit':'% change from previous day',
+        new_cases_normalized = {
+            'data':df_normalized.diff().copy(deep=True),
+            'unit':'% population newly infected / day',
         }
         normalized_cases = {
-            'data': df_normalized,
+            'data': df_normalized.copy(deep=True),
             'unit':'% of countrys population',
         }
         dfs[sub_cap] = {
             'cumulative cases':cases,
             'cumulative cases normalized':normalized_cases,
             'daily new cases':new_cases,
-            'daily new cases growth rate':new_cases_growth_rate,
+            'daily new cases normalized':new_cases_normalized,
+            'growth rate':cases_growth_rate,
         }
         evaluation_options = dfs[sub_cap].keys()
         

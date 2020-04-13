@@ -114,7 +114,7 @@ country_population_dict = get_population_by_country_dict()
 
 app.layout = dbc.Jumbotron(
     id='root',
-    className='container py-5',
+    className='container my-5',
     children = [
         dcc.Location(id='url', refresh=False),        
         html.Div(
@@ -366,12 +366,21 @@ app.layout = dbc.Jumbotron(
                     id='data-table-tab',
                     label='Data-table',
                     children=[
-                        html.A(
-                            'Download Excel Data',
-                            id='excel-download',
-                            download="data.xlsx",
-                            href="",
-                            target="_blank"
+                        html.Div(
+                            className='centered mx-2 my-4',
+                            children=[
+                            html.A(
+                                id='excel-download',
+                                download="data.xlsx",
+                                href="",
+                                target="_blank",
+                                className='centered',
+                                children=[
+                                    dbc.Button('Download selected Data as EXCEL Spreadsheet'),
+                                    
+                                ],
+                            ),
+                        ],
                         ),
                     ],
                 ),
@@ -380,7 +389,7 @@ app.layout = dbc.Jumbotron(
         
         html.Footer(
             id='footer-information',
-            className='text-muted border-top text-center py-2',
+            className='text-muted border-top text-center pt-2',
             children=[
                 dcc.Link(
                     id='github-repo-link',
