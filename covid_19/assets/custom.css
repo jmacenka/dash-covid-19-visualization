@@ -1,0 +1,25 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  /* font-size: 48px; */
+}
+
+.container-small {
+  width: 90%;
+  justify-content: center;
+}
+
+.spaced {
+  margin: 2% 3%;
+  padding: 1% 1%;
+}
+
+.centered {
+  margin: auto;
+  text-align: center;
+}
+
+.radio.btn {
+  float: left;
+  clear: none;
+  margin: 2px 0 0 2px;
+}

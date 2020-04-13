@@ -1,0 +1,19 @@
+FROM python:3.8
+
+# set environment variables
+ARG COVID_APP_CONTAINER_EXPOSED_PORT=8050
+ENV LAUNCHED_FROM_DOCKER_COMPOSE=0
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /app
+
+COPY ./requirements.txt .
+
+RUN pip install -r requirements.txt
+
+COPY . .
+
+EXPOSE ${COVID_APP_CONTAINER_EXPOSED_PORT}
+
+CMD ["gunicorn","-b","0.0.0.0:${COVID_APP_CONTAINER_EXPOSED_PORT}","app:server"]

@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  web_visualization:
+    build:
+      context: ./covid_19/
+      dockerfile: Dockerfile
+      args:
+        APP_EXPOSED_PORT: ${COVID_APP_CONTAINER_EXPOSED_PORT}
+    # ports:
+    #   - ${COVID_APP_PUBLISHED_PORT}:${COVID_APP_CONTAINER_EXPOSED_PORT}
+    environment:
+      - VIRTUAL_HOST=${DEPLOYMENT_VIRTUAL_HOST}
+      - LETSENCRYPT_HOST=${DEPLOYMENT_LETSENCRYPT_HOST}
+      - LETSENCRYPT_EMAIL=${DEPLOYMENT_LETSENCRYPT_EMAIL}
+      - COVID_APP_CONTAINER_EXPOSED_PORT=${COVID_APP_CONTAINER_EXPOSED_PORT}
+      - COVID_APP_SECRET_KEY=${COVID_APP_SECRET_KEY}
