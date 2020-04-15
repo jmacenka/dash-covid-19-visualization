@@ -215,6 +215,7 @@ app.layout = dbc.Jumbotron(
                                                     labelClassName="date-group-labels btn btn-warning",
                                                     labelCheckedClassName="date-group-labels-checked",
                                                     inline=True,
+                                                    persistence=True,
                                                     options=[
                                                         {'value':key, 'label': key} for key in dfs.keys()
                                                     ],
@@ -238,6 +239,7 @@ app.layout = dbc.Jumbotron(
                                                     labelClassName="date-group-labels btn btn-warning",
                                                     labelCheckedClassName="date-group-labels-checked",
                                                     inline=True,
+                                                    persistence=True,                                                    
                                                     options=[
                                                         {'value':key, 'label': key} for key in evaluation_options
                                                     ],
@@ -261,6 +263,7 @@ app.layout = dbc.Jumbotron(
                                                     labelClassName="date-group-labels btn btn-warning",
                                                     labelCheckedClassName="date-group-labels-checked",
                                                     inline=True,
+                                                    persistence=True,                                                    
                                                     options=[{'value': value, 'label': label} for value, label in GRAPH_SCALE_OPTIONS.items()],
                                                 ),
                                                 # dbc.ButtonGroup(
@@ -282,6 +285,7 @@ app.layout = dbc.Jumbotron(
                                                     labelClassName="date-group-labels btn btn-warning",
                                                     labelCheckedClassName="date-group-labels-checked",
                                                     inline=True,
+                                                    persistence=True,                                                   
                                                     options=[{'value': value, 'label': value} for value in range(1,8,1)],
                                                 ),
                                                 # dbc.ButtonGroup(
@@ -317,6 +321,7 @@ app.layout = dbc.Jumbotron(
                                                     labelClassName="date-group-labels btn btn-warning",
                                                     labelCheckedClassName="date-group-labels-checked",
                                                     inline=True,
+                                                    persistence=True,                                                    
                                                     options=[
                                                         {'value':key, 'label': key} for key in dfs.keys()
                                                     ],
@@ -340,6 +345,7 @@ app.layout = dbc.Jumbotron(
                                                     labelClassName="date-group-labels btn btn-warning",
                                                     labelCheckedClassName="date-group-labels-checked",
                                                     inline=True,
+                                                    persistence=True,                                                    
                                                     options=[
                                                         {'value':key, 'label': key} for key in evaluation_options
                                                     ],
@@ -363,6 +369,7 @@ app.layout = dbc.Jumbotron(
                                                     labelClassName="date-group-labels btn btn-warning",
                                                     labelCheckedClassName="date-group-labels-checked",
                                                     inline=True,
+                                                    persistence=True,                                                    
                                                     options=[{'value': value, 'label': label} for value, label in GRAPH_SCALE_OPTIONS.items()],
                                                 ),
                                                 # dbc.ButtonGroup(
@@ -384,6 +391,7 @@ app.layout = dbc.Jumbotron(
                                                     labelClassName="date-group-labels btn btn-warning",
                                                     labelCheckedClassName="date-group-labels-checked",
                                                     inline=True,
+                                                    persistence=True,                                                    
                                                     options=[{'value': value, 'label': value} for value in range(1,8,1)],
                                                 ),
                                                 # dbc.ButtonGroup(
