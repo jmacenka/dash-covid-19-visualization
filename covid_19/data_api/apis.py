@@ -36,7 +36,7 @@ def generate_dataframes_dict(source_file_list = [(sub,f"https://raw.githubuserco
             'tool_tip':'# of cases as gathered in Johns Hopkins data-repository',
         }
         cases_growth_rate = {
-            'data':df.pct_change().copy(deep=True),
+            'data':df.pct_change().copy(deep=True)*100,
             'unit':'% change from previous day',
             'tool_tip':'calculated % change from # of cases as gathered in Johns Hopkins data-repository',
         }
