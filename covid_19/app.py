@@ -19,13 +19,14 @@ from settings.markdown_text import JHCCU_TITLE, JHCCU_INFO_TEXT
 from pandemic_models.sir_model import SIR
 from data_api.apis import get_population_by_country_dict, generate_dataframes_dict
 
-# Server initialization
+# Server serttings
 FRAMEWORK_STYLESHEETS = [
     dbc.themes.GRID,
     # dbc.themes.MATERIA,
     dbc.themes.BOOTSTRAP,
 ]
 
+# Server initialization
 server = Flask(__name__)
 server.secret_key = os.environ.get('COVID_APP_SECRET_KEY', str(randint(0, 100000000000)))
 app = dash.Dash(__name__, external_stylesheets=FRAMEWORK_STYLESHEETS+EXTERNAL_STYLESHEETS,include_assets_files=True, server=server)
@@ -658,7 +659,6 @@ server = app.server
 # Run the Dash app, only for local development
 if __name__ == '__main__':
     if not os.environ.get('LAUNCHED_FROM_DOCKER_COMPOSE',False):
-        from random import randint
         app.run_server(debug=True, port=8055)
     else:
         app.server.run(host='0.0.0.0',debug=True, port=int(os.environ.get('COVID_APP_CONTAINER_EXPOSED_PORT',8050)), threaded=True)

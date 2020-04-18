@@ -50,10 +50,10 @@ def generate_dataframes_dict(source_file_list = [(sub,f"https://raw.githubuserco
             'unit':'% of countrys population',
         }
         dfs[sub_cap] = {
-            'cumulative cases':cases,
-            'cumulative cases normalized':normalized_cases,
-            'new cases':new_cases,
-            'new cases normalized':new_cases_normalized,
+            'cases':cases,
+            'cases normalized':normalized_cases,
+            'daily cases':new_cases,
+            'daily cases normalized':new_cases_normalized,
             'growth rate':cases_growth_rate,
         }
         evaluation_options = dfs[sub_cap].keys()
