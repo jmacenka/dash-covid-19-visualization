@@ -6,4 +6,6 @@ This is an extension to my original [Jupyter-Notebook](https://github.com/jmacen
 
 Feel free to fork, deploy or comment on :-)
 
+currently deployed at http://macenka.de
+
 > Jan Macenka
