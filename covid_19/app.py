@@ -175,365 +175,190 @@ app.layout = dbc.Jumbotron(
                 ),
             ],
         ),
-        
-        dcc.Tabs(
-            id='tab-register',
-            className='py-2',
-            persistence=True,
+        dcc.Tab(
+            id='data-visualization-tab',
+            label='Data-Visualization',
             children=[
-                dcc.Tab(
-                    id='data-visualization-tab',
-                    label='Data-Visualization',
+                dbc.Row(
+                    className='my-2',
                     children=[
-                        # html.H3(
-                        #     id='settings-header',
-                        #     className='text-center my-auto',
-                        #     children=[
-                        #         'Choose the data you want to see'
-                        #     ],
-                        # ),
-                        dbc.Row(
-                            className='my-2',
+                        dbc.Col(
+                            id='yaxis-settings-col',
                             children=[
-                                dbc.Col(
-                                    id='yaxis-settings-col',
-                                    children=[
-                                        html.H3(
-                                            className='centered p-2',
-                                            children='Y-axis',
-                                        ),
-                                        dbc.Card(
-                                            className='border-5 rounded py-2 m-2 bg-light',
-                                            children= [        
-                                                html.P(
-                                                    className='centered text-muted pt-2',
-                                                    children='data',
-                                                ),                                                                 
-                                                dbc.RadioItems(
-                                                    id="yaxis-data-selection",
-                                                    value= list(dfs.keys())[0],
-                                                    className="date-group-items centered pb-2",
-                                                    labelClassName="date-group-labels btn btn-warning",
-                                                    labelCheckedClassName="date-group-labels-checked",
-                                                    inline=True,
-                                                    options=[
-                                                        {'value':key, 'label': key} for key in dfs.keys()
-                                                    ],
-                                                ),
-                                                # dbc.ButtonGroup(
-                                                #     id='yaxis-data-selection-group',
-                                                #     className='full-width p-2',
-                                                #     children=[
-                                                #         dbc.Button(id=f'button-{key}',children=key)
-                                                #         for key in dfs.keys()
-                                                #     ],
-                                                # ),
-                                                html.P(
-                                                    className='centered text-muted pt-2',
-                                                    children='evaluation',
-                                                ),                                                     
-                                                dbc.RadioItems(
-                                                    id='yaxis-data-evaluation',
-                                                    value = list(evaluation_options)[0],
-                                                    className="date-group-items centered pb-2",
-                                                    labelClassName="date-group-labels btn btn-warning",
-                                                    labelCheckedClassName="date-group-labels-checked",
-                                                    inline=True,
-                                                    options=[
-                                                        {'value':key, 'label': key} for key in evaluation_options
-                                                    ],
-                                                ),
-                                                # dbc.ButtonGroup(
-                                                #     id='yaxis-data-evaluation-group',
-                                                #     className='full-width p-2',
-                                                #     children=[
-                                                #         dbc.Button(children=key)
-                                                #         for key in evaluation_options
-                                                #     ],
-                                                # ),
-                                                html.P(
-                                                    className='centered text-muted pt-2',
-                                                    children='axis scale',
-                                                ),
-                                                dbc.RadioItems(
-                                                    id='yaxis-type',
-                                                    value=list(GRAPH_SCALE_OPTIONS.keys())[-1],
-                                                    className="date-group-items centered pb-2",
-                                                    labelClassName="date-group-labels btn btn-warning",
-                                                    labelCheckedClassName="date-group-labels-checked",
-                                                    inline=True,
-                                                    options=[{'value': value, 'label': label} for value, label in GRAPH_SCALE_OPTIONS.items()],
-                                                ),
-                                                # dbc.ButtonGroup(
-                                                #     id='yaxis-type-group',
-                                                #     className='full-width p-2',
-                                                #     children=[
-                                                #         dbc.Button(children=label, key=value)
-                                                #         for value, label in GRAPH_SCALE_OPTIONS.items()
-                                                #     ],
-                                                # ),
-                                                html.P(
-                                                    className='centered text-muted pt-2',
-                                                    children='number of moving average days',
-                                                ),                                                         
-                                                dbc.RadioItems(
-                                                    id='yaxis-averaging-range-slider',
-                                                    value=1,
-                                                    className="date-group-items centered pb-2",
-                                                    labelClassName="date-group-labels btn btn-warning",
-                                                    labelCheckedClassName="date-group-labels-checked",
-                                                    inline=True,
-                                                    options=[{'value': value, 'label': value} for value in range(1,8,1)],
-                                                ),
-                                                # dbc.ButtonGroup(
-                                                #     id='yaxis-averaging-group',
-                                                #     className='full-width p-2',
-                                                #     children=[
-                                                #         dbc.Button(children=value, key=value)
-                                                #         for value in range(1,8,1)
-                                                #     ],
-                                                # ),                                                         
+                                html.H3(
+                                    className='centered p-2',
+                                    children='Y-axis',
+                                ),
+                                dbc.Card(
+                                    className='border-5 rounded py-2 m-2 bg-light',
+                                    children= [        
+                                        html.P(
+                                            className='centered text-muted pt-2',
+                                            children='data',
+                                        ),                                                                 
+                                        dbc.RadioItems(
+                                            id="yaxis-data-selection",
+                                            value= list(dfs.keys())[0],
+                                            className="date-group-items centered pb-2",
+                                            labelClassName="date-group-labels btn btn-warning",
+                                            labelCheckedClassName="date-group-labels-checked",
+                                            inline=True,
+                                            options=[
+                                                {'value':key, 'label': key} for key in dfs.keys()
                                             ],
                                         ),
+                                        html.P(
+                                            className='centered text-muted pt-2',
+                                            children='evaluation',
+                                        ),                                                     
+                                        dbc.RadioItems(
+                                            id='yaxis-data-evaluation',
+                                            value = list(evaluation_options)[0],
+                                            className="date-group-items centered pb-2",
+                                            labelClassName="date-group-labels btn btn-warning",
+                                            labelCheckedClassName="date-group-labels-checked",
+                                            inline=True,
+                                            options=[
+                                                {'value':key, 'label': key} for key in evaluation_options
+                                            ],
+                                        ),
+                                        html.P(
+                                            className='centered text-muted pt-2',
+                                            children='axis scale',
+                                        ),
+                                        dbc.RadioItems(
+                                            id='yaxis-type',
+                                            value=list(GRAPH_SCALE_OPTIONS.keys())[-1],
+                                            className="date-group-items centered pb-2",
+                                            labelClassName="date-group-labels btn btn-warning",
+                                            labelCheckedClassName="date-group-labels-checked",
+                                            inline=True,
+                                            options=[{'value': value, 'label': label} for value, label in GRAPH_SCALE_OPTIONS.items()],
+                                        ),
+                                        html.P(
+                                            className='centered text-muted pt-2',
+                                            children='number of moving average days',
+                                        ),                                                         
+                                        dbc.RadioItems(
+                                            id='yaxis-averaging-range-slider',
+                                            value=1,
+                                            className="date-group-items centered pb-2",
+                                            labelClassName="date-group-labels btn btn-warning",
+                                            labelCheckedClassName="date-group-labels-checked",
+                                            inline=True,
+                                            options=[{'value': value, 'label': value} for value in range(1,8,1)],
+                                        ),                                                        
                                     ],
                                 ),
-                                dbc.Col(
-                                    id='xaxis-settings-col',
-                                    children=[
-                                        html.H3(
-                                            className='centered p-2',
-                                            children='X-axis',
-                                        ),
-                                        dbc.Card(
-                                            className='border-5 rounded py-2 m-2 bg-light',
-                                            children= [        
-                                                html.P(
-                                                    className='centered text-muted pt-2',
-                                                    children='data',
-                                                ),                                                                 
-                                                dbc.RadioItems(
-                                                    id="xaxis-data-selection",
-                                                    value= list(dfs.keys())[-1],
-                                                    className="date-group-items centered pb-2",
-                                                    labelClassName="date-group-labels btn btn-warning",
-                                                    labelCheckedClassName="date-group-labels-checked",
-                                                    inline=True,
-                                                    options=[
-                                                        {'value':key, 'label': key} for key in dfs.keys()
-                                                    ],
-                                                ),
-                                                # dbc.ButtonGroup(
-                                                #     id='xaxis-data-selection-group',
-                                                #     className='full-width p-2',
-                                                #     children=[
-                                                #         dbc.Button(id=f'button-{key}',children=key)
-                                                #         for key in dfs.keys()
-                                                #     ],
-                                                # ),
-                                                html.P(
-                                                    className='centered text-muted pt-2',
-                                                    children='evaluation',
-                                                ),                                                     
-                                                dbc.RadioItems(
-                                                    id='xaxis-data-evaluation',
-                                                    value = list(evaluation_options)[0],
-                                                    className="date-group-items centered pb-2",
-                                                    labelClassName="date-group-labels btn btn-warning",
-                                                    labelCheckedClassName="date-group-labels-checked",
-                                                    inline=True,
-                                                    options=[
-                                                        {'value':key, 'label': key} for key in evaluation_options
-                                                    ],
-                                                ),
-                                                # dbc.ButtonGroup(
-                                                #     id='xaxis-data-evaluation-group',
-                                                #     className='full-width p-2',
-                                                #     children=[
-                                                #         dbc.Button(children=key)
-                                                #         for key in evaluation_options
-                                                #     ],
-                                                # ),
-                                                html.P(
-                                                    className='centered text-muted pt-2',
-                                                    children='axis scale',
-                                                ),
-                                                dbc.RadioItems(
-                                                    id='xaxis-type',
-                                                    value=list(GRAPH_SCALE_OPTIONS.keys())[-1],
-                                                    className="date-group-items centered pb-2",
-                                                    labelClassName="date-group-labels btn btn-warning",
-                                                    labelCheckedClassName="date-group-labels-checked",
-                                                    inline=True,
-                                                    options=[{'value': value, 'label': label} for value, label in GRAPH_SCALE_OPTIONS.items()],
-                                                ),
-                                                # dbc.ButtonGroup(
-                                                #     id='xaxis-type-group',
-                                                #     className='full-width p-2',
-                                                #     children=[
-                                                #         dbc.Button(children=label, key=value)
-                                                #         for value, label in GRAPH_SCALE_OPTIONS.items()
-                                                #     ],
-                                                # ),
-                                                html.P(
-                                                    className='centered text-muted pt-2',
-                                                    children='number of moving average days',
-                                                ),                                                         
-                                                dbc.RadioItems(
-                                                    id='xaxis-averaging-range-slider',
-                                                    value=1,
-                                                    className="date-group-items centered pb-2",
-                                                    labelClassName="date-group-labels btn btn-warning",
-                                                    labelCheckedClassName="date-group-labels-checked",
-                                                    inline=True,
-                                                    options=[{'value': value, 'label': value} for value in range(1,8,1)],
-                                                ),
-                                                # dbc.ButtonGroup(
-                                                #     id='yaxis-averaging-group',
-                                                #     className='full-width p-2',
-                                                #     children=[
-                                                #         dbc.Button(children=value, key=value)
-                                                #         for value in range(1,8,1)
-                                                #     ],
-                                                # ),                                                         
+                            ],
+                        ),
+                        dbc.Col(
+                            id='xaxis-settings-col',
+                            children=[
+                                html.H3(
+                                    className='centered p-2',
+                                    children='X-axis',
+                                ),
+                                dbc.Card(
+                                    className='border-5 rounded py-2 m-2 bg-light',
+                                    children= [        
+                                        html.P(
+                                            className='centered text-muted pt-2',
+                                            children='data',
+                                        ),                                                                 
+                                        dbc.RadioItems(
+                                            id="xaxis-data-selection",
+                                            value= list(dfs.keys())[-1],
+                                            className="date-group-items centered pb-2",
+                                            labelClassName="date-group-labels btn btn-warning",
+                                            labelCheckedClassName="date-group-labels-checked",
+                                            inline=True,
+                                            options=[
+                                                {'value':key, 'label': key} for key in dfs.keys()
                                             ],
                                         ),
+                                        html.P(
+                                            className='centered text-muted pt-2',
+                                            children='evaluation',
+                                        ),                                                     
+                                        dbc.RadioItems(
+                                            id='xaxis-data-evaluation',
+                                            value = list(evaluation_options)[0],
+                                            className="date-group-items centered pb-2",
+                                            labelClassName="date-group-labels btn btn-warning",
+                                            labelCheckedClassName="date-group-labels-checked",
+                                            inline=True,
+                                            options=[
+                                                {'value':key, 'label': key} for key in evaluation_options
+                                            ],
+                                        ),
+                                        html.P(
+                                            className='centered text-muted pt-2',
+                                            children='axis scale',
+                                        ),
+                                        dbc.RadioItems(
+                                            id='xaxis-type',
+                                            value=list(GRAPH_SCALE_OPTIONS.keys())[-1],
+                                            className="date-group-items centered pb-2",
+                                            labelClassName="date-group-labels btn btn-warning",
+                                            labelCheckedClassName="date-group-labels-checked",
+                                            inline=True,
+                                            options=[{'value': value, 'label': label} for value, label in GRAPH_SCALE_OPTIONS.items()],
+                                        ),
+                                        html.P(
+                                            className='centered text-muted pt-2',
+                                            children='number of moving average days',
+                                        ),                                                         
+                                        dbc.RadioItems(
+                                            id='xaxis-averaging-range-slider',
+                                            value=1,
+                                            className="date-group-items centered pb-2",
+                                            labelClassName="date-group-labels btn btn-warning",
+                                            labelCheckedClassName="date-group-labels-checked",
+                                            inline=True,
+                                            options=[{'value': value, 'label': value} for value in range(1,8,1)],
+                                        ),                                                       
                                     ],
-                                ),                                        
-                                # dbc.Col(
-                                #     id='x-axis-settings-col',
-                                #     children=[
-                                #         dbc.FormGroup(
-                                #             children= [
-                                #                 dcc.Dropdown(
-                                #                     id='xaxis-data-selection',
-                                #                     options=[
-                                #                         {'value':key, 'label':f'X-axis-data: {key}'} for key in dfs.keys()
-                                #                     ],
-                                #                     value = list(dfs.keys())[-1],
-                                #                     placeholder='Select data for the X-axis',
-                                #                     multi=False,
-                                #                     className='spaced',
-                                #                     persistence=True,
-                                #                     clearable=False,
-                                #                 ),
-                                #                 dcc.Dropdown(
-                                #                     id='xaxis-data-evaluation',
-                                #                     options=[
-                                #                         {'value':key, 'label':f'X-axis-evaluation: {key}'} for key in evaluation_options
-                                #                     ],
-                                #                     value = list(evaluation_options)[0],
-                                #                     placeholder='Select data for the X-axis',
-                                #                     multi=False,
-                                #                     className='spaced',
-                                #                     persistence=True,
-                                #                     clearable=False,
-                                #                 ),
-                                #                 dcc.Dropdown(
-                                #                     id='xaxis-type',
-                                #                     options=[{'value': value, 'label': f'X-axis-scale: {label}'} for value, label in GRAPH_SCALE_OPTIONS.items()],
-                                #                     value=list(GRAPH_SCALE_OPTIONS.keys())[-1],
-                                #                     multi=False,
-                                #                     className='spaced',
-                                #                     persistence=True,
-                                #                     clearable=False,
-                                #                 ),
-                                #                 html.Label(
-                                #                     htmlFor='xaxis-averaging-range-slider',
-                                #                     className='centered',
-                                #                     children='X-axis averaging days',
-                                #                 ),
-                                #                 dcc.Slider(
-                                #                     id='xaxis-averaging-range-slider',
-                                #                     updatemode='mouseup',
-                                #                     min=1,
-                                #                     max=7,
-                                #                     step=1,
-                                #                     value=1,
-                                #                     persistence=True,
-                                #                     marks={val:str(val) for val in range(1,8,1)},
-                                #                 ),
-                                #             ],
-                                #         ),
-                                #     ],
-                                # ),
+                                ),
                             ],
-                        ),
-                        html.P(
-                            className='centered text-muted pt-2',
-                            children='country selection',
-                        ),                            
-                        dcc.Dropdown(
-                            id='country-selection',
-                            value = INITIAL_COUNTRIES,
-                            placeholder='Select some countries...',
-                            multi=True,
-                            className='m-2',
-                            persistence=True,
-                            options=[
-                                {'label':country,'value':country} for country in list_of_avaliable_countries
-                            ],
-                        ),
-                        html.Div(
-                            id='data-visualitaion-graph',
-                            children=['populated by callback'],
-                        ),
-                        dcc.RangeSlider(
-                            id='date-range-slider',
-                            className='mb-5 pb-2 mx-2',
-                            updatemode='mouseup',
-                            min=0,
-                            max=(len(list_of_available_dates) - 1),
-                            count=1,
-                            step=1,
-                            allowCross=True,
-                            pushable=2,
-                            value=[0, (len(list_of_available_dates) - 1)],
-                            marks=get_slider_marks(list_of_available_dates),
-                            persistence=True,
-                        ),
+                        ),                                        
                     ],
                 ),
-                dcc.Tab(
-                    id='modeling-tab',
-                    label='Modeling',
-                    children=[
-                        html.Div(
-                            id='modeling-settings',
-                            children=[
-                                'Coming soon..'
-                            ],
-                        ),
-                        html.Div(
-                            id='modeling-graph',
-                            # children='populated by callback'
-                        ),
+                html.P(
+                    className='centered text-muted pt-2',
+                    children='country selection',
+                ),                            
+                dcc.Dropdown(
+                    id='country-selection',
+                    value = INITIAL_COUNTRIES,
+                    placeholder='Select some countries...',
+                    multi=True,
+                    className='m-2',
+                    persistence=True,
+                    options=[
+                        {'label':country,'value':country} for country in list_of_avaliable_countries
                     ],
                 ),
-                dcc.Tab(
-                    id='data-table-tab',
-                    label='Data-table',
-                    children=[
-                        html.Div(
-                            className='centered mx-2 my-4',
-                            children=[
-                            html.A(
-                                id='excel-download',
-                                download="data.xlsx",
-                                href="",
-                                target="_blank",
-                                className='centered',
-                                children=[
-                                    dbc.Button('Download selected Data as EXCEL Spreadsheet'),
-                                    
-                                ],
-                            ),
-                        ],
-                        ),
-                    ],
+                html.Div(
+                    id='data-visualitaion-graph',
+                    children=['populated by callback'],
+                ),
+                dcc.RangeSlider(
+                    id='date-range-slider',
+                    className='mb-5 pb-2 mx-2',
+                    updatemode='mouseup',
+                    min=0,
+                    max=(len(list_of_available_dates) - 1),
+                    count=1,
+                    step=1,
+                    allowCross=True,
+                    pushable=2,
+                    value=[0, (len(list_of_available_dates) - 1)],
+                    marks=get_slider_marks(list_of_available_dates),
+                    persistence=True,
                 ),
             ],
         ),
-        
         html.Footer(
             id='footer-information',
             className='text-muted border-top text-center pt-2',
@@ -566,13 +391,7 @@ def toggle_modal(n_open, n_close, is_open):
     return is_open
 
 @app.callback(
-    [Output('data-visualitaion-graph','children'),
-    Output('excel-download','href'),
-    # Output('yaxis-type','disabled'),
-    # Output('yaxis-data-evaluation','disabled'),
-    # Output('xaxis-type','disabled'),
-    # Output('xaxis-data-evaluation','disabled'),
-    ],
+    [Output('data-visualitaion-graph','children'),],
     [Input('country-selection','value'),
     Input('date-range-slider','value'),
     Input('yaxis-type','value'),
@@ -612,47 +431,15 @@ def update_data_visualitaion_graph(country_selection_value,
     
     graph = build_graph(**env_variables)
     
-    xlsx_io = io.BytesIO()
-    with pd.ExcelWriter(xlsx_io, engine='xlsxwriter') as writer:
-        for country in country_selection_value:
-            df_y_data = get_country_data_df(yaxis_data_selection_value, yaxis_data_evaluation_value, country, range_slider_value)
-            df_y_data.columns = [f'{country} - {yaxis_data_selection_value}',]
-            df_x_data = get_country_data_df(xaxis_data_selection_value, xaxis_data_evaluation_value, country, range_slider_value)
-            df_x_data.columns = [f'{country} - {xaxis_data_selection_value}',]
-            pd.concat([df_y_data, df_x_data], axis=1).to_excel(writer, sheet_name=country)
-    xlsx_io.seek(0)
-    # https://en.wikipedia.org/wiki/Data_URI_scheme
-    media_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    data = base64.b64encode(xlsx_io.read()).decode("utf-8")
-    href_data_downloadable = f'data:{media_type};base64,{data}'
-    
     yaxis_type_disabled = 'time' in yaxis_data_selection_value
     yaxis_data_evaluation_disabled = 'time' in yaxis_data_selection_value
     xaxis_type_disabled = 'time' in xaxis_data_selection_value
     xaxis_data_evaluation_disabled = 'time' in xaxis_data_selection_value
     
     return (
-        graph, 
-        href_data_downloadable, 
-        # yaxis_type_disabled, 
-        # yaxis_data_evaluation_disabled, 
-        # xaxis_type_disabled, 
-        # xaxis_data_evaluation_disabled,       
+        graph,     
     )
 
-# @app.callback(
-#     [Output(f"button-{key}", "active") for key in dfs.keys()]+
-#     [Output('yaxis-data-selection-group','key'),],
-#     [Input(f"button-{key}", "n_clicks") for key in dfs.keys()],
-# )
-# def set_active(*args):
-#     if any([*args]):
-#         ctx = dash.callback_context
-#         button_id = ctx.triggered[0]["prop_id"].split(".")[0]
-
-#         return [button_id == f"button-{key}" for key in dfs.keys()] +[button_id.split('button-')[0],]
-
-#     return [False for _ in dfs.keys()] + [False,]
 
 # Extract the Flask-Server for gunicorn
 server = app.server
