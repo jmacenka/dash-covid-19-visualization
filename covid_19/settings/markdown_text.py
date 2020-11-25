@@ -13,6 +13,17 @@ Have fun exploring the data with views you control.
 
 ## View options
 #### Data
+confirmed => The total numer of confirmed cases in the Johns Hopkins Data-Set.
+
+infected => Calculated value: confirmed - recovered - deaths = infected
+
+recovered => The total numer of recovered cases in the Johns Hopkins Data-Set.
+
+deaths => The total numer of death cases in the Johns Hopkins Data-Set.
+
+time => A time axis. This wont be used in conjunction with log-scale or moving averages other than 1.
+
+#### Evaluation
 cases => The total cumulative number of cases as reported in the Johns Hopkins Data-Set.
 
 cases normalized => Numer of cases divided by the respective countries population.
@@ -24,7 +35,7 @@ daily cases normalized => Numer of daily cases divided by the respective contrie
 growth rate => The percentage change of the #cases based on the previous day. Not exactly the R-number but verry similar.
 
 #### Scale
-You can either use linear or logarithmic scale.
+You can either use linear or logarithmic scale. If you find straight lines in logarithmic scaled data, this indicates an exponential behaviour.
 
 #### Moving average
 To flatten peaks in the figures, you can apply a moving average filter for up to 7 days. Bear in mind that this will blur the data into later days. A moving average of 1 is equal to no moving average. 
