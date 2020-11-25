@@ -165,7 +165,7 @@ app.layout = dbc.Jumbotron(
                                 html.Blockquote(
                                     html.Cite('created by Jan Macenka',)
                                 ),
-                                dbc.Button("Ok, tanks.", id="close-info-modal", className="ml-auto"),
+                                dbc.Button("Close", id="close-info-modal", className="ml-auto"),
                             ]
                         ),
                     ],
