@@ -139,7 +139,7 @@ app.layout = dbc.Jumbotron(
                     id='open-info-modal',
                     className='btn-primary',
                     children=[
-                        "about this App"
+                        "About this App"
                     ]
                 ),                
                 dbc.Modal(
@@ -368,6 +368,14 @@ app.layout = dbc.Jumbotron(
                     href='https://github.com/jmacenka/dash-covid-19-visualization',
                     children=[
                         'App source code',
+                    ],
+                ),
+                html.Br(),
+                html.A(
+                    id='footer-email-to-developer',
+                    href='mailto:corona.macenka.de@gmx.net',
+                    children=[
+                        'Email to developer'
                     ],
                 ),
                 html.Br(),
