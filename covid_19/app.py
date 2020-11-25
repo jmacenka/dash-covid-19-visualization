@@ -346,7 +346,7 @@ app.layout = dbc.Jumbotron(
                 dcc.RangeSlider(
                     id='date-range-slider',
                     className='mb-5 pb-2 mx-2',
-                    updatemode='mouseup',
+                    updatemode='drag',
                     min=0,
                     max=(len(list_of_available_dates) - 1),
                     count=1,
@@ -438,11 +438,6 @@ def update_data_visualitaion_graph(country_selection_value,
         )
     
     graph = build_graph(**env_variables)
-    
-    yaxis_type_disabled = 'time' in yaxis_data_selection_value
-    yaxis_data_evaluation_disabled = 'time' in yaxis_data_selection_value
-    xaxis_type_disabled = 'time' in xaxis_data_selection_value
-    xaxis_data_evaluation_disabled = 'time' in xaxis_data_selection_value
     
     return (
         graph,     
